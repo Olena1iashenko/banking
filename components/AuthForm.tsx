@@ -10,18 +10,10 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomInput from "./CustomInput";
-import {
-  authFormSchema,
-  encryptId,
-  extractCustomerIdFromUrl,
-  parseStringify,
-} from "@/lib/utils";
+import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-// import { signIn, signUp } from "@/lib/actions/user.actions";
-
-import { account, ID } from "../app/appwrite";
-import { Models } from "appwrite";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 
 const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null);
@@ -45,30 +37,6 @@ const AuthForm = ({ type }: { type: string }) => {
       ssn: "",
     },
   });
-
-  const signIn = async (userData: SignUpParams) => {
-    const { email, password } = userData;
-    const session = await account.createEmailPasswordSession(email, password);
-    const user = await account.get();
-    console.log("user login", user);
-
-    return parseStringify(user);
-  };
-
-  const signUp = async (userData: SignUpParams) => {
-    const { email, password, firstName, lastName } = userData;
-    const createdUser = await account.create(
-      ID.unique(),
-      email,
-      password,
-      `${firstName} ${lastName}`
-    );
-    console.log(createdUser);
-    const user = signIn(userData);
-    console.log("user register", user);
-
-    return user;
-  };
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {

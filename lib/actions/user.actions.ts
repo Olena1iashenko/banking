@@ -1,4 +1,4 @@
-"use server";
+// "use server";
 
 import { useState } from "react";
 import { account, ID } from "../../app/appwrite";
@@ -25,6 +25,7 @@ import { log } from "console";
 export const signIn = async (userData: SignUpParams) => {
   const { email, password } = userData;
   const session = await account.createEmailPasswordSession(email, password);
+
   const user = await account.get();
   console.log("user login", user);
 
@@ -32,12 +33,8 @@ export const signIn = async (userData: SignUpParams) => {
 };
 
 export const signUp = async (userData: SignUpParams) => {
-  console.log("signup");
   const { email, password, firstName, lastName } = userData;
-  console.log(ID.unique());
-  console.log(email);
-  console.log(password);
-  console.log(`${firstName} ${lastName}`);
+
   const createdUser = await account.create(
     ID.unique(),
     email,
@@ -45,7 +42,7 @@ export const signUp = async (userData: SignUpParams) => {
     `${firstName} ${lastName}`
   );
   console.log(createdUser);
-  const user = signIn(userData);
+  const user = await signIn(userData);
   console.log("user register", user);
 
   return user;
