@@ -4,7 +4,6 @@ import { useState } from "react";
 import { account, ID } from "../../app/appwrite";
 import { Models } from "appwrite";
 import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils";
-import { log } from "console";
 
 // export const signIn = async () => {
 //   try {
@@ -21,6 +20,9 @@ import { log } from "console";
 //     console.error("Error", error);
 //   }
 // };
+export const getSession = async () => {
+  return await account.getSession("current");
+};
 
 export const signIn = async (userData: SignUpParams) => {
   const { email, password } = userData;
@@ -28,8 +30,8 @@ export const signIn = async (userData: SignUpParams) => {
 
   const user = await account.get();
   console.log("user login", user);
-
-  return parseStringify(user);
+  console.log("user session", session);
+  return parseStringify(session);
 };
 
 export const signUp = async (userData: SignUpParams) => {
@@ -50,4 +52,21 @@ export const signUp = async (userData: SignUpParams) => {
 
 export const logout = async () => {
   await account.deleteSession("current");
+  // setUser(null);
 };
+
+// export const getUserInfo = async ({ userId }: getUserInfoProps) => {
+//   try {
+//     const { database } = await createAdminClient();
+
+//     const user = await database.listDocuments(
+//       DATABASE_ID!,
+//       USER_COLLECTION_ID!,
+//       [Query.equal("userId", [userId])]
+//     );
+
+//     return parseStringify(user.documents[0]);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
