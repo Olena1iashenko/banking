@@ -5,32 +5,25 @@ import { account, ID } from "../../app/appwrite";
 import { Models } from "appwrite";
 import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils";
 
-// export const signIn = async () => {
-//   try {
-//     //Mutation / Databases / Make fetch
-//   } catch (error) {
-//     console.error("Error", error);
-//   }
-// };
+export const getUserInfo = async ({ userId }: getUserInfoProps) => {
+  const user = await account.get();
+  console.log("user actual", user);
 
-// export const signUp = async (userData: SignUpParams) => {
-//   try {
-//     // Create a user account
-//   } catch (error) {
-//     console.error("Error", error);
-//   }
-// };
+  return user;
+};
+
 export const getSession = async () => {
-  return await account.getSession("current");
+  const currentSession = await account.getSession("current");
+  console.log(currentSession);
+
+  return currentSession;
 };
 
 export const signIn = async (userData: SignUpParams) => {
   const { email, password } = userData;
   const session = await account.createEmailPasswordSession(email, password);
-
-  const user = await account.get();
-  console.log("user login", user);
   console.log("user session", session);
+
   return parseStringify(session);
 };
 

@@ -33,12 +33,32 @@ declare type User = {
   dwollaCustomerId: string;
   firstName: string;
   lastName: string;
+  name: string;
   address1: string;
   city: string;
   state: string;
   postalCode: string;
   dateOfBirth: string;
   ssn: string;
+};
+
+declare type getLoggedInUserInfoProps = {
+  $createdAt: string;
+  $id: string;
+  $updatedAt: string;
+  accessedAt: string;
+  email: string;
+  emailVerification: boolean;
+  labels: string[];
+  mfa: boolean;
+  name: string;
+  passwordUpdate: string;
+  phone: string;
+  phoneVerification: boolean;
+  prefs: Record<string, any>;
+  registration: string;
+  status: boolean;
+  targets: any;
 };
 
 declare type NewUserParams = {
@@ -210,6 +230,7 @@ declare interface TotlaBalanceBoxProps {
 
 declare interface FooterProps {
   user: User;
+  type?: "mobile" | "desktop";
 }
 
 declare interface RightSidebarProps {
